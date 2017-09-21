@@ -2,7 +2,7 @@ package org.spree.core.parameter;
 
 public interface Parameter<T> {
 
-    T getValue();
+    T value();
 
     void setValue(T value);
 }
