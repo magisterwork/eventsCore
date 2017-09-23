@@ -2,19 +2,19 @@ package org.spree.core.parameter;
 
 public interface ConfigStorage {
 
-    String getString(String key);
+    String getString(ParameterName key);
 
-    int getInt(String key);
+    Integer getInt(ParameterName key);
 
-    double getDouble(String key);
+    Double getDouble(ParameterName key);
 
-    Object getValue(String key);
+    Object getValue(ParameterName key);
 
-    void save(String key, String value);
+    void save(ParameterName key, String value);
 
-    void save(String key, int value);
+    void save(ParameterName key, int value);
 
-    void save(String key, double value);
+    void save(ParameterName key, double value);
 
-    void save(String key, Object value);
+    void save(ParameterName key, Object value);
 }

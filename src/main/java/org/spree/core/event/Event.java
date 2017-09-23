@@ -4,7 +4,7 @@ import java.util.Calendar;
 
 public interface Event {
 
-    void save();
+    Long getId();
 
     String getName();
 
@@ -13,4 +13,6 @@ public interface Event {
     Calendar getStartDate();
 
     Calendar getFinishDate();
+
+    String getImageUrl();
 }

@@ -8,6 +8,5 @@ public class JdbcEventStorage implements EventStorage {
     }
 
     public void save(Event event) {
-        event.save();
     }
 }

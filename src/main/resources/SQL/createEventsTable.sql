@@ -1,8 +1,10 @@
 CREATE TABLE IF NOT EXISTS EVENTS (
-  id VARCHAR(30) PRIMARY KEY,
-  name VARCHAR(256),
+  id          MEDIUMINT    NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  name        VARCHAR(256) NOT NULL,
   description TEXT,
-  start_time DATETIME,
+  start_time  DATETIME,
   finish_time DATETIME,
-  image_url VARCHAR(128)
+  image_url   VARCHAR(128)
 );
+
+DROP TABLE EVENTS
