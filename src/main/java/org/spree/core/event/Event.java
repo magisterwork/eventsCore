@@ -15,4 +15,8 @@ public interface Event {
     Calendar getFinishDate();
 
     String getImageUrl();
+
+    String getExtId();
+
+    String getSystemId();
 }

@@ -7,8 +7,8 @@ import java.util.Calendar;
 
 public class JdbcEvent implements StoredEvent {
 
-    private final String INSERT_QUERY = "insert into EVENTS (name, description, start_time, finish_time, image_url) "
-            + "VALUES (:name, :description, :startTime, :finishTime, :imageUrl)";
+    private final String INSERT_QUERY = "REPLACE EVENTS (name, description, start_time, finish_time, image_url, ext_id, ext_system_id) "
+            + "VALUES (?, ?, ?, ?, ?, ?, ?)";
     private final String UPDATE_QUERY = "insert into EVENTS (name, description, start_time, finish_time, image_url) "
             + "VALUES (:name, :description, :startTime, :finishTime, :imageUrl)";
 
@@ -22,17 +22,20 @@ public class JdbcEvent implements StoredEvent {
 
     @Transactional
     public void save() {
-        Object[] params = {
-                event.getName(),
-                event.getDescription(),
-                event.getStartDate(),
-                event.getFinishDate(),
-                event.getImageUrl()
-        };
         if (event.getId() == null) {
-            jdbc.update(INSERT_QUERY, params);
+            jdbc.update(INSERT_QUERY,
+                    event.getName(),
+                    event.getDescription(),
+                    event.getStartDate(),
+                    event.getFinishDate(),
+                    event.getImageUrl());
         } else {
-            jdbc.update(UPDATE_QUERY, params);
+            jdbc.update(UPDATE_QUERY,
+                    event.getName(),
+                    event.getDescription(),
+                    event.getStartDate(),
+                    event.getFinishDate(),
+                    event.getImageUrl());
         }
     }
 
@@ -62,5 +65,13 @@ public class JdbcEvent implements StoredEvent {
 
     public String getImageUrl() {
         return getImageUrl();
+    }
+
+    public String getExtId() {
+        return event.getExtId();
+    }
+
+    public String getSystemId() {
+        return event.getSystemId();
     }
 }
