@@ -1,13 +1,14 @@
 package org.spree.core.parameter;
 
-import org.spree.core.exception.DbConfigException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 public class JdbcConfigStorage implements ConfigStorage {
 
+    private static Logger log = Logger.getLogger(JdbcConfigStorage.class.getCanonicalName());
     private static final String SELECT_QUERY = "select CONFIG_VALUE from CONFIG where CONFIG_KEY = ?";
     private static final String SAVE_QUERY = "INSERT INTO CONFIG (CONFIG_KEY, CONFIG_VALUE) VALUES (?, ?)" +
             " ON DUPLICATE KEY UPDATE CONFIG_VALUE = ?";
@@ -44,6 +45,7 @@ public class JdbcConfigStorage implements ConfigStorage {
 
     @Transactional
     public void save(ParameterName parameter, String value) {
+        log.info("saving parameter " + parameter + " with value " + value);
         jdbc.update(SAVE_QUERY, parameter.name(), value, parameter.name());
     }
 
