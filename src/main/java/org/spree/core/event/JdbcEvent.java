@@ -9,8 +9,8 @@ public class JdbcEvent implements StoredEvent {
 
     private final String INSERT_QUERY = "REPLACE EVENTS (name, description, start_time, finish_time, image_url, ext_id, ext_system_id) "
             + "VALUES (?, ?, ?, ?, ?, ?, ?)";
-    private final String UPDATE_QUERY = "insert into EVENTS (name, description, start_time, finish_time, image_url) "
-            + "VALUES (:name, :description, :startTime, :finishTime, :imageUrl)";
+    private final String UPDATE_QUERY = "update EVENTS SET name = :name, description = :desctiption, start_time = : startDate," +
+            " finish_time = :finishTime, image_url = :imageUrl, ext_id = :extId, ext_system_id = :externalSystemId";
 
     private JdbcTemplate jdbc;
     private Event event;
@@ -28,14 +28,18 @@ public class JdbcEvent implements StoredEvent {
                     event.getDescription(),
                     event.getStartDate(),
                     event.getFinishDate(),
-                    event.getImageUrl());
+                    event.getImageUrl(),
+                    event.getExtId(),
+                    event.getSystemId());
         } else {
             jdbc.update(UPDATE_QUERY,
                     event.getName(),
                     event.getDescription(),
                     event.getStartDate(),
                     event.getFinishDate(),
-                    event.getImageUrl());
+                    event.getImageUrl(),
+                    event.getExtId(),
+                    event.getSystemId());
         }
     }
 
