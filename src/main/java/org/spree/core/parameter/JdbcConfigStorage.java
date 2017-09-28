@@ -1,19 +1,25 @@
 package org.spree.core.parameter;
 
+import org.spree.core.exception.DbConfigException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
 public class JdbcConfigStorage implements ConfigStorage {
 
-    private static Logger log = Logger.getLogger(JdbcConfigStorage.class.getCanonicalName());
+    private final static Logger LOG = Logger.getLogger(JdbcConfigStorage.class.getCanonicalName());
     private static final String SELECT_QUERY = "select CONFIG_VALUE from CONFIG where CONFIG_KEY = ?";
     private static final String SAVE_QUERY = "INSERT INTO CONFIG (CONFIG_KEY, CONFIG_VALUE) VALUES (?, ?)" +
             " ON DUPLICATE KEY UPDATE CONFIG_VALUE = ?";
+    private static final String DELETE_QUERY = "delete from CONFIG_VALUE where CONFIG_KEY = ?";
 
     private JdbcTemplate jdbc;
+    private SimpleDateFormat dateFormat;
 
     public JdbcConfigStorage(JdbcTemplate jdbc) {
         this.jdbc = jdbc;
@@ -39,14 +45,28 @@ public class JdbcConfigStorage implements ConfigStorage {
         return null;
     }
 
+    public Date getDate(ParameterName key) {
+        dateFormat = new SimpleDateFormat();
+        try {
+            return dateFormat.parse(getString(key));
+        } catch (ParseException e) {
+            throw new DbConfigException(e);
+        }
+    }
+
     public Object getValue(ParameterName key) {
         return null;
     }
 
     @Transactional
     public void save(ParameterName parameter, String value) {
-        log.info("saving parameter " + parameter + " with value " + value);
+        LOG.info("saving parameter " + parameter + " with value " + value);
         jdbc.update(SAVE_QUERY, parameter.name(), value, parameter.name());
+    }
+
+    public void save(ParameterName key, Date value) {
+        LOG.info("saving parameter " + key + " with value " + value);
+        jdbc.update(SAVE_QUERY, key.name(), value.toString(), key.name());
     }
 
     public void save(ParameterName parameter, int value) {
@@ -59,6 +79,10 @@ public class JdbcConfigStorage implements ConfigStorage {
 
     public void save(ParameterName parameter, Object value) {
         jdbc.update(SAVE_QUERY, parameter.name(), value, parameter.name());
+    }
+
+    public void remove(ParameterName parameterName) {
+        jdbc.update(DELETE_QUERY, parameterName.name());
     }
 
 }

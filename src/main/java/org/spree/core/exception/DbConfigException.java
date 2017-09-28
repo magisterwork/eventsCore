@@ -13,4 +13,8 @@ public class DbConfigException extends RuntimeException {
     public DbConfigException(String s, Throwable throwable) {
         super(s, throwable);
     }
+
+    public DbConfigException(Throwable throwable) {
+        super(throwable);
+    }
 }
