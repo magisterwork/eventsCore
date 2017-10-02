@@ -79,7 +79,7 @@ public class JdbcConfigStorage implements ConfigStorage {
 
     public void save(ParameterName parameter, Object value) {
         LOG.info("saving parameter " + parameter + " with value " + value);
-        jdbc.update(SAVE_QUERY, parameter.name(), value, parameter.name());
+        jdbc.update(SAVE_QUERY, parameter.name(), value, value);
     }
 
     public void remove(ParameterName parameterName) {
