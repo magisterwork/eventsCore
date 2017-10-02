@@ -34,11 +34,11 @@ public class JdbcConfigStorage implements ConfigStorage {
     }
 
     public Integer getInt(ParameterName parameter) {
-        List<Integer> results = jdbc.queryForList(SELECT_QUERY, new Object[]{parameter.name()}, Integer.class);
+        List<String> results = jdbc.queryForList(SELECT_QUERY, new Object[]{parameter.name()}, String.class);
         if (results.size() != 1) {
             return null;
         }
-        return results.get(0);
+        return Integer.valueOf(results.get(0));
     }
 
     public Double getDouble(ParameterName key) {
@@ -61,7 +61,7 @@ public class JdbcConfigStorage implements ConfigStorage {
     @Transactional
     public void save(ParameterName parameter, String value) {
         LOG.info("saving parameter " + parameter + " with value " + value);
-        jdbc.update(SAVE_QUERY, parameter.name(), value, parameter.name());
+        jdbc.update(SAVE_QUERY, parameter.name(), value, value);
     }
 
     public void save(ParameterName key, Date value) {
