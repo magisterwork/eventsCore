@@ -4,13 +4,16 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Calendar;
+import java.util.logging.Logger;
 
 public class JdbcEvent implements StoredEvent {
 
-    private final String INSERT_QUERY = "REPLACE EVENTS (name, description, start_time, finish_time, image_url, ext_id, ext_system_id) "
+    private final String INSERT_QUERY = "REPLACE EVENTS (name, description, start_time, finish_time, image_url, ext_id, system_id) "
             + "VALUES (?, ?, ?, ?, ?, ?, ?)";
-    private final String UPDATE_QUERY = "update EVENTS SET name = :name, description = :desctiption, start_time = : startDate," +
-            " finish_time = :finishTime, image_url = :imageUrl, ext_id = :extId, ext_system_id = :externalSystemId";
+    private final String UPDATE_QUERY = "UPDATE EVENTS SET name = :name, description = :desctiption, start_time = : startDate," +
+            " finish_time = :finishTime, image_url = :imageUrl, ext_id = :extId, system_id = :externalSystemId";
+    private final static Logger LOG = Logger.getLogger(JdbcEvent.class.getCanonicalName());
+
 
     private JdbcTemplate jdbc;
     private Event event;
@@ -22,33 +25,20 @@ public class JdbcEvent implements StoredEvent {
 
     @Transactional
     public void save() {
-        if (event.getId() == null) {
-            jdbc.update(INSERT_QUERY,
-                    event.getName(),
-                    event.getDescription(),
-                    event.getStartDate(),
-                    event.getFinishDate(),
-                    event.getImageUrl(),
-                    event.getExtId(),
-                    event.getSystemId());
-        } else {
-            jdbc.update(UPDATE_QUERY,
-                    event.getName(),
-                    event.getDescription(),
-                    event.getStartDate(),
-                    event.getFinishDate(),
-                    event.getImageUrl(),
-                    event.getExtId(),
-                    event.getSystemId());
-        }
+        LOG.info("saving event" + toString());
+        jdbc.update(UPDATE_QUERY,
+                event.getName(),
+                event.getDescription(),
+                event.getStartDate(),
+                event.getFinishDate(),
+                event.getImageUrl(),
+                event.getExtId(),
+                event.getSystemId());
+
     }
 
     public void reread() {
 
-    }
-
-    public Long getId() {
-        return event.getId();
     }
 
     public String getName() {

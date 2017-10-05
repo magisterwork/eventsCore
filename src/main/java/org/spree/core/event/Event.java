@@ -4,8 +4,6 @@ import java.util.Calendar;
 
 public interface Event {
 
-    Long getId();
-
     String getName();
 
     String getDescription();
