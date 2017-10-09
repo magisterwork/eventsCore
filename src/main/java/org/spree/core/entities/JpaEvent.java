@@ -26,6 +26,9 @@ public class JpaEvent implements Event {
     @Id
     private String systemId;
 
+    public JpaEvent() {
+    }
+
     public JpaEvent(Event event) {
         this.name = event.getName();
         this.description = event.getDescription();
@@ -39,8 +42,6 @@ public class JpaEvent implements Event {
     public EventId getId() {
         return new EventId(extId, systemId);
     }
-
-
 
     @Override
     public String getName() {
@@ -105,10 +106,13 @@ public class JpaEvent implements Event {
         this.systemId = systemId;
     }
 
-    public class EventId implements Serializable {
+    public static class EventId implements Serializable {
 
         private String systemId;
         private String extId;
+
+        public EventId() {
+        }
 
         public EventId(String extId, String systemId) {
             this.extId = extId;

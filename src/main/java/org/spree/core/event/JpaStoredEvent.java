@@ -1,7 +1,6 @@
 package org.spree.core.event;
 
 import org.spree.core.entities.JpaEvent;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.Calendar;
@@ -9,13 +8,12 @@ import java.util.Calendar;
 public class JpaStoredEvent implements StoredEvent {
 
     private JpaEvent event;
-
-    public JpaStoredEvent(JpaEvent event) {
-        this.event = event;
-    }
-
-    @Autowired
     private CrudRepository<JpaEvent, JpaEvent.EventId> repository;
+
+    public JpaStoredEvent(JpaEvent event, CrudRepository<JpaEvent, JpaEvent.EventId> repository) {
+        this.event = event;
+        this.repository = repository;
+    }
 
     @Override
     public String getName() {
