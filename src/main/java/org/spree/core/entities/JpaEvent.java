@@ -1,6 +1,6 @@
 package org.spree.core.entities;
 
-import org.spree.core.event.StoredEvent;
+import org.spree.core.event.Event;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -9,13 +9,13 @@ import java.util.Calendar;
 @Entity
 @Table(name = "EVENTS", schema = "events")
 @IdClass(JpaEvent.EventId.class)
-public class JpaEvent implements StoredEvent {
+public class JpaEvent implements Event {
 
     private String name;
     private String description;
-    @Column(name = "start_date")
+    @Column(name = "start_time")
     private Calendar startDate;
-    @Column(name = "finish_date")
+    @Column(name = "finish_time")
     private Calendar finishDate;
     @Column(name = "image_url")
     private String imageUrl;
@@ -25,6 +25,22 @@ public class JpaEvent implements StoredEvent {
     @Column(name = "system_id")
     @Id
     private String systemId;
+
+    public JpaEvent(Event event) {
+        this.name = event.getName();
+        this.description = event.getDescription();
+        this.startDate = event.getStartDate();
+        this.finishDate = event.getFinishDate();
+        this.imageUrl = event.getImageUrl();
+        this.extId = event.getExtId();
+        this.systemId = event.getSystemId();
+    }
+
+    public EventId getId() {
+        return new EventId(extId, systemId);
+    }
+
+
 
     @Override
     public String getName() {
@@ -89,20 +105,15 @@ public class JpaEvent implements StoredEvent {
         this.systemId = systemId;
     }
 
-    @Override
-    public void save() {
-
-    }
-
-    @Override
-    public void reread() {
-
-    }
-
     public class EventId implements Serializable {
 
         private String systemId;
         private String extId;
+
+        public EventId(String extId, String systemId) {
+            this.extId = extId;
+            this.systemId = systemId;
+        }
 
         public String getSystemId() {
             return systemId;

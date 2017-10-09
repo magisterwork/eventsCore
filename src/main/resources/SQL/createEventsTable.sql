@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS EVENTS (
+CREATE TABLE IF NOT EXISTS events (
   name        VARCHAR(256) NOT NULL,
   description TEXT,
   start_time  DATETIME,

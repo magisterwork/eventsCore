@@ -8,8 +8,6 @@ import java.util.logging.Logger;
 
 public class JdbcEvent implements StoredEvent {
 
-    private final String INSERT_QUERY = "REPLACE EVENTS (name, description, start_time, finish_time, image_url, ext_id, system_id) "
-            + "VALUES (?, ?, ?, ?, ?, ?, ?)";
     private final String UPDATE_QUERY = "UPDATE EVENTS SET name = :name, description = :desctiption, start_time = : startDate," +
             " finish_time = :finishTime, image_url = :imageUrl, ext_id = :extId, system_id = :externalSystemId";
     private final static Logger LOG = Logger.getLogger(JdbcEvent.class.getCanonicalName());
