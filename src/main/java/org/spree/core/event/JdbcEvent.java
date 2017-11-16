@@ -1,9 +1,12 @@
 package org.spree.core.event;
 
+import org.spree.core.category.Category;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.List;
 import java.util.logging.Logger;
 
 public class JdbcEvent implements StoredEvent {
@@ -65,5 +68,10 @@ public class JdbcEvent implements StoredEvent {
 
     public String getSystemId() {
         return event.getSystemId();
+    }
+
+    @Override
+    public List<Category> getCategories() {
+        return Collections.emptyList();
     }
 }

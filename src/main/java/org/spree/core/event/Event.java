@@ -1,6 +1,9 @@
 package org.spree.core.event;
 
+import org.spree.core.category.Category;
+
 import java.util.Calendar;
+import java.util.List;
 
 public interface Event {
 
@@ -17,4 +20,6 @@ public interface Event {
     String getExtId();
 
     String getSystemId();
+
+    List<? extends Category> getCategories();
 }

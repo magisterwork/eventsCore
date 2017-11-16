@@ -1,12 +1,16 @@
 package org.spree.core.entities;
 
+import org.spree.core.category.Category;
+import org.spree.core.category.JpaCategory;
 import org.spree.core.event.Event;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
-@Entity
+@Entity(name = "event")
 @Table(name = "EVENTS", schema = "events")
 @IdClass(JpaEvent.EventId.class)
 public class JpaEvent implements Event {
@@ -25,6 +29,8 @@ public class JpaEvent implements Event {
     @Column(name = "system_id")
     @Id
     private String systemId;
+    @OneToMany(targetEntity = JpaCategory.class, cascade = CascadeType.ALL)
+    private List<JpaCategory> categories;
 
     public JpaEvent() {
     }
@@ -37,6 +43,10 @@ public class JpaEvent implements Event {
         this.imageUrl = event.getImageUrl();
         this.extId = event.getExtId();
         this.systemId = event.getSystemId();
+        this.categories = new ArrayList<JpaCategory>();
+        for (Category category : event.getCategories()) {
+            categories.add(new JpaCategory(category));
+        }
     }
 
     public EventId getId() {
@@ -100,6 +110,11 @@ public class JpaEvent implements Event {
     @Override
     public String getSystemId() {
         return systemId;
+    }
+
+    @Override
+    public List<JpaCategory> getCategories() {
+        return categories;
     }
 
     public void setSystemId(String systemId) {

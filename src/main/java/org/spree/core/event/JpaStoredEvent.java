@@ -1,9 +1,11 @@
 package org.spree.core.event;
 
+import org.spree.core.category.Category;
 import org.spree.core.entities.JpaEvent;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.Calendar;
+import java.util.List;
 
 public class JpaStoredEvent implements StoredEvent {
 
@@ -48,6 +50,11 @@ public class JpaStoredEvent implements StoredEvent {
     @Override
     public String getSystemId() {
         return event.getSystemId();
+    }
+
+    @Override
+    public List<? extends Category> getCategories() {
+        return event.getCategories();
     }
 
     @Override
