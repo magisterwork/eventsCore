@@ -29,6 +29,8 @@ public class JpaEvent implements Event {
     @Column(name = "system_id")
     @Id
     private String systemId;
+    @Column(name = "members_count")
+    private int membersCount;
     @OneToMany(targetEntity = JpaCategory.class, cascade = CascadeType.ALL)
     private List<JpaCategory> categories;
 
@@ -44,6 +46,7 @@ public class JpaEvent implements Event {
         this.extId = event.getExtId();
         this.systemId = event.getSystemId();
         this.categories = new ArrayList<JpaCategory>();
+        this.membersCount = event.getMembersCount();
         for (Category category : event.getCategories()) {
             categories.add(new JpaCategory(category));
         }
@@ -110,6 +113,11 @@ public class JpaEvent implements Event {
     @Override
     public String getSystemId() {
         return systemId;
+    }
+
+    @Override
+    public int getMembersCount() {
+        return membersCount;
     }
 
     @Override

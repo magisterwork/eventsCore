@@ -9,6 +9,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.logging.Logger;
 
+@Deprecated
 public class JdbcEvent implements StoredEvent {
 
     private final String UPDATE_QUERY = "UPDATE EVENTS SET name = :name, description = :desctiption, start_time = : startDate," +
@@ -68,6 +69,11 @@ public class JdbcEvent implements StoredEvent {
 
     public String getSystemId() {
         return event.getSystemId();
+    }
+
+    @Override
+    public int getMembersCount() {
+        return 0;
     }
 
     @Override

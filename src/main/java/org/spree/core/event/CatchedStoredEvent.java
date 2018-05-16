@@ -1,20 +1,18 @@
 package org.spree.core.event;
 
 import org.spree.core.category.Category;
-import org.spree.core.entities.JpaEvent;
-import org.springframework.data.repository.CrudRepository;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.logging.Logger;
 
-public class JpaStoredEvent implements StoredEvent {
+public class CatchedStoredEvent implements StoredEvent {
 
-    private JpaEvent event;
-    private CrudRepository<JpaEvent, JpaEvent.EventId> repository;
+    private static final Logger LOG = Logger.getLogger(CatchedStoredEvent.class.getCanonicalName());
+    private StoredEvent event;
 
-    public JpaStoredEvent(JpaEvent event, CrudRepository<JpaEvent, JpaEvent.EventId> repository) {
+    public CatchedStoredEvent(StoredEvent event) {
         this.event = event;
-        this.repository = repository;
     }
 
     @Override
@@ -64,11 +62,19 @@ public class JpaStoredEvent implements StoredEvent {
 
     @Override
     public void save() {
-        repository.save(event);
+        try {
+            event.save();
+        } catch (Exception e) {
+            LOG.warning("event saving error " + e.getMessage());
+        }
     }
 
     @Override
     public void reread() {
-        event = repository.findOne(event.getId());
+        try {
+            event.reread();
+        } catch (Exception e) {
+            LOG.warning("event reread error " + e.getMessage());
+        }
     }
 }

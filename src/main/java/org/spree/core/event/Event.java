@@ -21,5 +21,7 @@ public interface Event {
 
     String getSystemId();
 
+    int getMembersCount();
+
     List<? extends Category> getCategories();
 }
