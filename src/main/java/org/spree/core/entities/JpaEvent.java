@@ -31,7 +31,7 @@ public class JpaEvent implements Event {
     private String systemId;
     @Column(name = "members_count")
     private int membersCount;
-    @OneToMany(targetEntity = JpaCategory.class, cascade = CascadeType.ALL)
+    @ManyToMany(targetEntity = JpaCategory.class, cascade = CascadeType.REMOVE)
     private List<JpaCategory> categories;
 
     public JpaEvent() {
