@@ -16,6 +16,7 @@ import java.util.List;
 public class JpaEvent implements Event {
 
     private String name;
+    @Column(length = 5000)
     private String description;
     @Column(name = "start_time")
     private Calendar startDate;
