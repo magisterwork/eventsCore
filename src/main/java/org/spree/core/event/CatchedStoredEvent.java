@@ -61,6 +61,16 @@ public class CatchedStoredEvent implements StoredEvent {
     }
 
     @Override
+    public double getLatitude() {
+        return event.getLatitude();
+    }
+
+    @Override
+    public double getLongitude() {
+        return event.getLongitude();
+    }
+
+    @Override
     public void save() {
         try {
             event.save();

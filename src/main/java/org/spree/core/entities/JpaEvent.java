@@ -35,6 +35,9 @@ public class JpaEvent implements Event {
     @ManyToMany(targetEntity = JpaCategory.class, cascade = CascadeType.ALL)
     private List<JpaCategory> categories;
 
+    private double latitude;
+    private double longitude;
+
     public JpaEvent() {
     }
 
@@ -124,6 +127,16 @@ public class JpaEvent implements Event {
     @Override
     public List<JpaCategory> getCategories() {
         return categories;
+    }
+
+    @Override
+    public double getLatitude() {
+        return latitude;
+    }
+
+    @Override
+    public double getLongitude() {
+        return longitude;
     }
 
     public void setSystemId(String systemId) {

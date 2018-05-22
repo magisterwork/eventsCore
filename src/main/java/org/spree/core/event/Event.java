@@ -24,4 +24,8 @@ public interface Event {
     int getMembersCount();
 
     List<? extends Category> getCategories();
+
+    double getLatitude();
+
+    double getLongitude();
 }
