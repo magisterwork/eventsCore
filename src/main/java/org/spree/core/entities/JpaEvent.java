@@ -34,7 +34,6 @@ public class JpaEvent implements Event {
     private int membersCount;
     @ManyToMany(targetEntity = JpaCategory.class, cascade = CascadeType.ALL)
     private List<JpaCategory> categories;
-
     private double latitude;
     private double longitude;
 
